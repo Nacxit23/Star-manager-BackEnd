@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->integer('star_id')->unsigned()->index();
             $table->foreign('star_id')->references('id')->on('stars')->onDelete('cascade');
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('name');
             $table->timestamps();
         });
