@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Star extends Migration
+class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class Star extends Migration
      */
     public function up()
     {
-        Schema::create('stars', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->tinyInteger('paid_at')->default(0);
+            $table->integer('star_id')->unsigned()->index();
+            $table->foreign('star_id')->references('id')->on('stars')->onDelete('cascade');
+            $table->date('date');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class Star extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('star');
+        Schema::dropIfExists('events');
     }
 }
