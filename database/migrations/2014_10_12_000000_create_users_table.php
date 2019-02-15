@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->boolean('is_admin')->default(false);
             $table->string('last_name');
-            $table->string('name')->virtualAs('CONCAT("first_name", " ", "last_name")');
+            $table->string('name')->storedAs('CONCAT(first_name, " ", last_name)');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
