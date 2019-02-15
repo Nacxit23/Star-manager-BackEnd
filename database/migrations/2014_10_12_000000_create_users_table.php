@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->boolean('is_admin')->default(false);
             $table->string('last_name');
-            $table->string('name')->virtualAs('CONCAT("first_name", " ", "last_name")');
+            $table->string('name')->virtualAs('CONCAT(first_name, " ", last_name)');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
