@@ -6,15 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Star extends Model
 {
-    protected $table = 'stars';
-
-    public $timestamps = false;
 
     protected $fillable = [
         'id',
         'user_id',
         'paid_at',
     ];
+
+    /**
+     * Relations
+     *
+     */
 
     public function event()
     {

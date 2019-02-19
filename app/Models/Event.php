@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $table = 'events';
-
-    public $timestamps = false;
-
     protected $fillable = [
         'id',
         'star_id',
         'date',
         'name',
     ];
+
+    /**
+     * Relations
+     *
+     */
 
     public function comment()
     {
@@ -27,7 +28,6 @@ class Event extends Model
         return $this->HasMany('App\Models\Star');
     }
 
-    #Relation with table pivot events_users
     public function user()
     {
         return $this->belongsToMany('App\Models\User', 'event_user')

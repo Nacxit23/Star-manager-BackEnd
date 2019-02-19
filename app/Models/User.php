@@ -14,9 +14,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $table = 'users';
-
-    public $timestamps = false;
 
     protected $fillable = [
         'id',
@@ -26,6 +23,21 @@ class User extends Authenticatable
         'last_name',
         'name',
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * Relations
+     *
+     */
 
     public function comment()
     {
@@ -37,19 +49,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Star');
     }
 
-    #Relation with table pivot events_users
     public function event()
     {
         return $this->belongsToMany('App\Models\Event', 'event_user')
             ->withPivot('user_id');
     }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
 }
