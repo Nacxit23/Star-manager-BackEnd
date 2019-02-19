@@ -6,25 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Star extends Model
 {
-
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
-        'id',
         'user_id',
         'paid_at',
     ];
 
     /**
-     * Relations
-     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-
     public function event()
     {
-        return $this->belongsTo('App\Models\Event');
+        return $this->belongsTo(Event::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
-        return $this->hasMany('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

@@ -6,31 +6,36 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
-        'id',
         'star_id',
         'date',
         'name',
     ];
 
     /**
-     * Relations
-     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-
-    public function comment()
+    public function comments()
     {
-        return $this->belongsTo('App\Models\Comment');
+        return $this->hasMany(Comment::class);
     }
 
-    public function star()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stars()
     {
-        return $this->HasMany('App\Models\Star');
+        return $this->hasMany(Star::class);
     }
 
-    public function user()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'event_user')
-            ->withPivot('event_id');
+        return $this->belongsToMany(User::class);
     }
 }
