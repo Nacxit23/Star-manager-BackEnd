@@ -12,19 +12,14 @@ class User extends Authenticatable
     /**
      * {@inheritdoc}
      */
-<<<<<<< HEAD
-
-<<<<<<< HEAD:app/User.php
+<<<<<<< HEADHEAD:app/User.php
 /**
  * Undocumented variable
  *
  * @var string
  */
     protected $table = 'users';
-=======
->>>>>>> 64b232d640009a39afb356b33f192c8093826bff:app/Models/User.php
-=======
->>>>>>> e0d2372f1175aae97e9d81ab02c5b08ac892a6e0
+
     protected $fillable = [
         'email',
         'first_name',
@@ -35,11 +30,9 @@ class User extends Authenticatable
   
     
     /**
-<<<<<<< HEAD
      * Undocumented variable
      *
-     * @var array
-=======
+     * @var ar
      * {@inheritdoc}
 >>>>>>> e0d2372f1175aae97e9d81ab02c5b08ac892a6e0
      */
