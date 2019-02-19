@@ -10,49 +10,43 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * {@inheritdoc}
      */
-
     protected $fillable = [
-        'id',
         'email',
         'first_name',
         'is_admin',
         'last_name',
-        'name',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * {@inheritdoc}
      */
-
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     /**
-     * Relations
-     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-
-    public function comment()
+    public function comments()
     {
-        return $this->belongsTo('App\Models\Comment');
+        return $this->hasMany(Comment::class);
     }
 
-    public function star()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function events()
     {
-        return $this->belongsTo('App\Models\Star');
+        return $this->belongsToMany(Event::class);
     }
 
-    public function event()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stars()
     {
-        return $this->belongsToMany('App\Models\Event', 'event_user')
-            ->withPivot('user_id');
+        return $this->hasMany(Star::class);
     }
-
 }

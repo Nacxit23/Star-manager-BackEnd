@@ -6,25 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
-        'id',
+        'description',
         'event_id',
         'user_id',
-        'description',
     ];
 
     /**
-     * Relations
-     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-
     public function event()
     {
-        return $this->HasMany('App\Models\Event');
+        return $this->belongsTo(Event::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
-        return $this->HasMany('App\Models\Comment');
+        return $this->belongsTo(Comment::class);
     }
 }
