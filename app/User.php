@@ -14,6 +14,12 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+/**
+ * Undocumented variable
+ *
+ * @var string
+ */
     protected $table = 'users';
     protected $fillable = [
         'id', 
@@ -24,8 +30,10 @@ class User extends Authenticatable
         'name',
     ];
 
+  
+    
     /**
-     * The attributes that should be hidden for arrays.
+     * Undocumented variable
      *
      * @var array
      */
