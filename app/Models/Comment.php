@@ -18,7 +18,7 @@ class Comment extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function events()
+    public function event()
     {
         return $this->belongsTo(Event::class);
     }
@@ -26,7 +26,7 @@ class Comment extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
