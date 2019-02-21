@@ -12,14 +12,11 @@ class User extends Authenticatable
     /**
      * {@inheritdoc}
      */
-<<<<<<< HEADHEAD:app/User.php
 /**
  * Undocumented variable
  *
  * @var string
  */
-    protected $table = 'users';
-
     protected $fillable = [
         'email',
         'first_name',
@@ -27,21 +24,18 @@ class User extends Authenticatable
         'last_name',
     ];
 
-  
-    
     /**
      * Undocumented variable
      *
-     * @var ar
+     * @var array
      * {@inheritdoc}
->>>>>>> e0d2372f1175aae97e9d81ab02c5b08ac892a6e0
      */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
