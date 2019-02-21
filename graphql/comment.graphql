@@ -1,0 +1,8 @@
+ 
+
+type Comment @model{
+     id: ID! @globalId
+     descripcion: String! 
+     event: Event! @belongsTo(relation: "event")
+     user:  User!  @belongsTo(relation: "user")
+}
