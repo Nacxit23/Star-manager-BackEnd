@@ -1,7 +1,8 @@
 type Comment @model {
     description: String!
-    event:       Event! @belongsTo
-    user:        User!  @belongsTo
+    id: ID! @globalId
+    event: Event! @belongsTo
+    user: User! @belongsTo
 }
 extend type Query{
   comments: [Comment!]! @field(resolver: "App\\GraphQL\\Queries\\CommentQuery@resolve")
