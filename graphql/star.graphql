@@ -4,3 +4,7 @@ type Star @model {
     paidAt: Date! @rename(attribute: "paid_at")
     user: User! @belongsTo
 }
+
+type Query{
+    stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
+}
