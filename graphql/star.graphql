@@ -1,7 +1,6 @@
-type Star @model {    
+type Star @model {
     id: ID! @globalId
+    event: Event! @belongsTo
     paidAt: Date! @rename(attribute: "paid_at")
-    event: Event! @belongsTo(relation: "parent")
-    user: User! @belongsTo(relation: "parent")   
+    user: User! @belongsTo
 }
- 

@@ -1,9 +1,8 @@
 type Event @model {
+    comments: [Comment!]! @hasMany(type: "connection")
+    date: DateTime!
     id: ID! @globalId
-    date: Date!
     name: String!
-    comments: [Comment!]! @hasMany
-    stars: [Star!]! @hasMany
-    users: [User!]! @belongsToMany
-
+    stars: [Star!]! @hasMany(type: "connection")
+    users: [User!]! @belongsToMany(type: "connection")
 }

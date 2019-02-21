@@ -1,6 +1,6 @@
 type Comment @model {
-    id: ID! @globalId
     description: String!
-    event: Event! @belongsTo(relation: "parent")
-    user: User! @belongsTo(relation: "parent") 
+    id: ID! @globalId
+    event: Event! @belongsTo
+    user: User! @belongsTo
 }
