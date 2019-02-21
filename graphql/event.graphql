@@ -1,17 +1,9 @@
-
-"A datetime string with format 'Y-m-d H:i:s', e.g. '2018-01-01 13:00:00'."
-scalar DateTime
-    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-
-"A date string with format 'Y-m-d', e.g. '2011-05-23'."
-scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
-
 type Event @model {
-    id: ID! @globalId
+    id: ID!   @globalId
+    date:     Date!
+    name:     String!
     comments: [Comment!]! @hasMany
-    stars:    [Star!]!    @hasMany
-    date:      Date!
-    name:      String!
-    users:    [User!]!    @belongsToMany
+    stars:    [Star!]! @hasMany
+    users:    [User!]! @belongsToMany
 
 }

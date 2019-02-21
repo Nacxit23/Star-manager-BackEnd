@@ -17,7 +17,7 @@ class Star extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function event()
+    public function events()
     {
         return $this->belongsTo(Event::class);
     }
@@ -25,7 +25,7 @@ class Star extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class);
     }
