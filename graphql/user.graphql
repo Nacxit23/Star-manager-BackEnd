@@ -11,5 +11,5 @@ type User {
 }
 extend type Query {
   users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
-  users(id: ID! @eq): User @find(model: "App\\Models\\User")
+  user(id: ID! @eq): User @find(model: "App\\Models\\User")
 }
