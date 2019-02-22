@@ -12,22 +12,14 @@ class User extends Authenticatable
     /**
      * {@inheritdoc}
      */
-/**
- * Undocumented variable
- *
- * @var string
- */
     protected $fillable = [
         'email',
         'first_name',
         'is_admin',
         'last_name',
     ];
-
+    
     /**
-     * Undocumented variable
-     *
-     * @var array
      * {@inheritdoc}
      */
     protected $hidden = [

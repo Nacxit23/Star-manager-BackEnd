@@ -1,11 +1,12 @@
 type Event @model {
-    comments: [Comment!]! @hasMany(type: "connection")
-    date: DateTime!
-    id: ID! @globalId
-    name: String!
-    stars: [Star!]! @hasMany(type: "connection")
-    users: [User!]! @belongsToMany(type: "connection")
+  comments: [Comment!]! @hasMany(type: "connection")
+  date: DateTime!
+  id: ID! @globalId
+  name: String!
+  stars: [Star!]! @hasMany(type: "connection")
+  users: [User!]! @belongsToMany(type: "connection")
 }
+
 extend type Query{
-  events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
+ events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
 }
