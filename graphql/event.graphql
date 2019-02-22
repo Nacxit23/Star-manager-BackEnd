@@ -6,7 +6,6 @@ type Event @model {
     stars: [Star!]! @hasMany(type: "connection")
     users: [User!]! @belongsToMany(type: "connection")
 }
-
 extend type Query{
   events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
 
