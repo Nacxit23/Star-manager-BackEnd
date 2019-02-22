@@ -6,5 +6,4 @@ type Comment @model {
 }
 extend type Query{
   comments: [Comment!]! @field(resolver: "App\\GraphQL\\Queries\\CommentQuery@resolve")
-
 }
