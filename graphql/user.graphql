@@ -10,6 +10,6 @@ type User {
   stars: [Star!]! @hasMany(type: "connection")
 }
 extend type Query {
- users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
- user(id: ID! @eq): User @find(model: "App\\Models\\User")
+  users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+  user(id: ID! @eq): User @find(model: "App\\Models\\User")
 }

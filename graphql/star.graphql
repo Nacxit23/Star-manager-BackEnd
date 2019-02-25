@@ -6,5 +6,5 @@ type Star @model {
 }
 
 extend type Query {
- stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
+  stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
 }
