@@ -11,7 +11,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 type Query {
   dummy: String
- }
- type Mutation {
+}
+type Mutation {
   dummy: String
- }
+}
