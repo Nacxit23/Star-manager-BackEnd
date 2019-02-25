@@ -8,5 +8,5 @@ type Event @model {
 }
 
 extend type Query{
- events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
+  events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
 }

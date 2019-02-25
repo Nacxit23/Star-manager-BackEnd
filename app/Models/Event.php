@@ -10,9 +10,9 @@ class Event extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
-        'star_id',
         'date',
         'name',
+        'star_id',
     ];
 
     /**
