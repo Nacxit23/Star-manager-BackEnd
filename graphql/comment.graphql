@@ -1,0 +1,10 @@
+type Comment @model {
+  description: String!
+  event: Event! @belongsTo
+  id: ID! @globalId
+  user: User! @belongsTo
+}
+
+extend type Query {
+  comments: [Comment!]! @field(resolver: "App\\GraphQL\\Queries\\CommentQuery@resolve")
+}

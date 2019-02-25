@@ -1,0 +1,10 @@
+type Star @model {
+  event: Event! @belongsTo
+  id: ID! @globalId
+  paidAt: Date! @rename(attribute: "paid_at")
+  user: User! @belongsTo
+}
+
+extend type Query {
+  stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
+}

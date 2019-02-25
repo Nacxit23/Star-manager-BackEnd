@@ -1,0 +1,16 @@
+type User {
+  comments: [Comment!]! @hasMany(type: "connection")
+  email: String!
+  events: [Event!]! @belongsToMany(type: "connection")
+  firstName: String! @rename(attribute: "first_name")
+  id: ID! @globalId
+  isAdmin: Boolean! @rename(attribute: "is_admin")
+  lastName: String @rename(attribute: "last_name")
+  name: String
+  stars: [Star!]! @hasMany(type: "connection")
+}
+
+extend type Query {
+  user(id: ID! @eq): User @find(model: "App\\Models\\User")
+  users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+}

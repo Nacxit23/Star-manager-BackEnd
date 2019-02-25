@@ -18,7 +18,7 @@ class User extends Authenticatable
         'is_admin',
         'last_name',
     ];
-
+    
     /**
      * {@inheritdoc}
      */
@@ -27,7 +27,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
