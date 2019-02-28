@@ -1,0 +1,7 @@
+projects:
+  app:
+    includes:
+      - '**/*.gql'
+    extensions:
+      endpoints:
+        dev: 'http://trouble-stars.test/graphql'
