@@ -1,7 +1,7 @@
 type Star @model {
-  event: Event! @belongsTo
+  event: Event @belongsTo
   id: ID! @globalId
-  paidAt: Date! @rename(attribute: "paid_at")
+  paidAt: Date @rename(attribute: "paid_at")
   user: User! @belongsTo
 }
 
@@ -9,21 +9,14 @@ extend type Query {
   stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
 }
 
-input createStarInput{
-    userId: ID!
+input CreateStarInput {
+  userId: ID!
 }
 
-extend type Mutation{
-  createStar(input: createStarInput!): Star
-  @field(resolver: "App\\GraphQL\\Mutations\\CreateStarMutation@resolve")
-}
+extend type Mutation {
+  createStar(input: CreateStarInput!): Star
+    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Create@resolve")
 
-input deleteStarInput{
-    id: ID!
+  deleteStar(id: ID!): Star
+    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Delete@resolve")
 }
-
-extend type Mutation{
-  deleteStar(input: deleteStarInput!): Star
-  @field(resolver: "App\\GraphQL\\Mutations\\DeleteStarMutation@resolve")
-}
-
