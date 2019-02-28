@@ -8,3 +8,22 @@ type Star @model {
 extend type Query {
   stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
 }
+
+input createStarInput{
+    userId: ID!
+}
+
+extend type Mutation{
+  createStar(input: createStarInput!): Star
+  @field(resolver: "App\\GraphQL\\Mutations\\CreateStarMutation@resolve")
+}
+
+input deleteStarInput{
+    id: ID!
+}
+
+extend type Mutation{
+  deleteStar(input: deleteStarInput!): Star
+  @field(resolver: "App\\GraphQL\\Mutations\\DeleteStarMutation@resolve")
+}
+
