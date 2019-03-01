@@ -9,39 +9,25 @@ extend type Query {
   comments: [Comment!]! @field(resolver: "App\\GraphQL\\Queries\\CommentQuery@resolve")
 }
 
-input createComment {
+input CreateComment {
   description: String!
   eventId: ID!
 }
 
-input updateComment {
+input UpdateComment {
   description: String!
   id: ID!
 }
 
-input deleteComment {
+input DeleteComment {
   id: ID!
 }
 
 extend type Mutation {
-  createComment(input: createComment!): Comment
-  @field(
-    resolver: "App\\GraphQL\\Mutations\\Comment\\CreateComment@resolve"
-  )
+  createComment(input: CreateComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Create@resolve")
+  updateComment(input: UpdateComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Update@resolve")
+  deleteComment(input: DeleteComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Delete@resolve")
 }
-
-extend type Mutation {
-  updateComment(input: updateComment!): Comment
-  @field(
-    resolver: "App\\GraphQL\\Mutations\\Comment\\UpdateComment@resolve"
-  )
-}
-
-extend type Mutation {
-  deleteComment(input: deleteComment!): Comment
-  @field(
-    resolver: "App\\GraphQL\\Mutations\\Comment\\DeleteComment@resolve"
-  )
-}
-
-

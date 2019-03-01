@@ -5,13 +5,9 @@ namespace App\GraphQL\Mutations\Comment;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\Comment;
-use App\Models\User;
-use App\Models\Event;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-
-class CreateComment
+class Update
 {
     /**
      * Return a value for the field.
@@ -22,22 +18,22 @@ class CreateComment
      * @param  \GraphQL\Type\Definition\ResolveInfo  $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
      * @return mixed
      */
-    public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
+    public function resolve($rootValue, array $args)
     {
-        Auth::loginUsingId(1);
-        $user = Auth::user();
         $inputEvent = $args['input'];
 
-        if ($user) {
-          $eventArgs = $inputEvent['eventId'];
-          $findEventId = Event::findOrFail($eventArgs);
+        Auth::loginUsingId(1);
+        $user = Auth::user();
 
+        if($user){
           $inputs = [
             'description' => $inputEvent['description'],
-            'event_id'    => $eventArgs,
-            'user_id'     => $user->id
+            'userId'      => $user->id,
           ];
-          return Comment::create($inputs);
+          $idComment = $inputEvent['id'];
+          $comment = Comment::Find($idComment);
+          $comment->update($inputs);
+          return $comment;
         }
     }
 }

@@ -4,11 +4,12 @@ namespace App\GraphQL\Mutations\Comment;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use App\Models\User;
 use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-
-class UpdateComment
+class Delete
 {
     /**
      * Return a value for the field.
@@ -21,19 +22,14 @@ class UpdateComment
      */
     public function resolve($rootValue, array $args)
     {
-        $inputEvent = $args['input'];
+        $inputComment = $args['input'];
 
         Auth::loginUsingId(1);
         $user = Auth::user();
 
-        if($user){
-          $inputs = [
-            'description' => $inputEvent['description'],
-            'userId'      => $user->id,
-          ];
-          $idComment = $inputEvent['id'];
-          $comment = Comment::Find($idComment);
-          $comment->update($inputs);
+        if ($user->is_admind) {
+          $commentId = $inputComment['id'];
+          $comment =Comment::destroy($commentId);
           return $comment;
         }
     }
