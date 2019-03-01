@@ -10,17 +10,20 @@ class Star extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
+        'event_id',
         'paid_at',
         'user_id',
+
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function event()
+    public function events()
     {
-        return $this->belongsTo(Event::class);
+        return $this->hasMany(Event::class);
     }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

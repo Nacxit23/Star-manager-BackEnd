@@ -12,7 +12,6 @@ class Event extends Model
     protected $fillable = [
         'date',
         'name',
-        'star_id',
     ];
 
     /**
@@ -24,11 +23,11 @@ class Event extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function stars()
+    public function star()
     {
-        return $this->hasMany(Star::class);
+        return $this->belongsTo(Star::class);
     }
 
     /**
