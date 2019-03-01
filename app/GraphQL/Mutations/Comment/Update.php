@@ -6,6 +6,9 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use GraphQL\Error\UserError;
+use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+
 
 class Update
 {
@@ -18,22 +21,26 @@ class Update
      * @param  \GraphQL\Type\Definition\ResolveInfo  $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
      * @return mixed
      */
-    public function resolve($rootValue, array $args)
+    public function resolve($rootValue, array $args, GraphQLContext $context)
     {
-        $inputEvent = $args['input'];
+        $input = $args['input'];
+        $user = $context->user();
 
-        Auth::loginUsingId(1);
-        $user = Auth::user();
 
-        if($user){
-          $inputs = [
-            'description' => $inputEvent['description'],
-            'userId'      => $user->id,
-          ];
-          $idComment = $inputEvent['id'];
-          $comment = Comment::Find($idComment);
-          $comment->update($inputs);
-          return $comment;
+        /** @var Comment $comment */
+        $comment = Comment::find(
+            GlobalId::decodeID($input['id'])
+        );
+
+        throw_unless(
+            $comment,
+            UserError::class,
+            'Comment not found.'
+        );
+
+        return $comment->update([
+            'description' => $input['description'],
+            'user_id' => $user->id,
+        ]);
         }
     }
-}
