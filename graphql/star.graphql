@@ -1,8 +1,9 @@
 type Star @model {
-  event: Event @belongsTo
+  events: [Event] @hasMany(type: "connection")
   id: ID! @globalId
   paidAt: Date @rename(attribute: "paid_at")
   user: User! @belongsTo
+
 }
 
 extend type Query {

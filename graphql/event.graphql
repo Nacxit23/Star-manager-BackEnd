@@ -3,7 +3,7 @@ type Event @model {
   date: DateTime!
   id: ID! @globalId
   name: String!
-  stars: [Star!]! @hasMany(type: "connection")
+  star: Star @belongsTo
   users: [User!]! @belongsToMany(type: "connection")
 }
 
