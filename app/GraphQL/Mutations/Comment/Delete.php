@@ -9,17 +9,15 @@ use GraphQL\Error\UserError;
 use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 
-
 class Delete
 {
     /**
-     * Return a value for the field.
+     * @param $root
+     * @param array $args
+     * @param GraphQLContext $context
      *
-     * @param  null  $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param  mixed[]  $args The arguments that were passed into the field.
-     * @param  \Nuwave\Lighthouse\Support\Contracts\GraphQLContext  $context Arbitrary data that is shared between all fields of a single query.
-     * @param  \GraphQL\Type\Definition\ResolveInfo  $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Throwable
      */
     public function resolve($rootValue, array $args)
     {
@@ -27,13 +25,15 @@ class Delete
         $input = $args['input'];
 
         throw_unless(
-           $user->is_admin,
-           UserError::class,
-           'You do not have permission to delete a comment'
+            $user->is_admin,
+            UserError::class,
+            'You do not have permission to delete a comment'
         );
 
-        return Comment::destroy(
+        $comment = Comment::destroy(
             GlobalId::decodeID($input['id'])
         );
+
+        return $comment;
     }
 }
