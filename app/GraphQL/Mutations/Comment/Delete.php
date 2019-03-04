@@ -33,7 +33,7 @@ class Delete
         $comment = Comment::find(
             GlobalId::decodeID($input['id'])
         );
-        Comment::destroy($comment->id);
+        $comment->delete();
 
         return $comment;
     }
