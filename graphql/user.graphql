@@ -7,6 +7,7 @@ type User {
   isAdmin: Boolean! @rename(attribute: "is_admin")
   lastName: String @rename(attribute: "last_name")
   name: String
+  password: String!
   stars: [Star!]! @hasMany(type: "connection")
 }
 
@@ -14,3 +15,34 @@ extend type Query {
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
   users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
 }
+
+input CreateUser {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input DeleteUser {
+  id: ID!
+}
+
+input adminUsers {
+  id: ID!
+}
+
+extend type Mutation {
+  createUser(input: CreateUser!): User
+  @field(
+      resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve"
+  )
+  deleteUser(input: DeleteUser!): User
+  @field(
+      resolver: "App\\GraphQL\\Mutations\\User\\Delete@resolve"
+  )
+  adminUsers(input: adminUsers!): User
+  @field(
+      resolver: "App\\GraphQL\\Mutations\\User\\Update@resolve"
+  )
+}
+

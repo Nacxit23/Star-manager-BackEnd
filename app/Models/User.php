@@ -17,8 +17,9 @@ class User extends Authenticatable
         'first_name',
         'is_admin',
         'last_name',
+        'password',
     ];
-    
+
     /**
      * {@inheritdoc}
      */
