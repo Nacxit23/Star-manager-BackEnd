@@ -38,9 +38,8 @@ class Update
 
         $comment->update([
             'description' => $input['description'],
-            'user_id' => $user->id,
         ]);
 
         return $comment;
-        }
     }
+}
