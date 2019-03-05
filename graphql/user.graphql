@@ -17,18 +17,10 @@ extend type Query {
 }
 
 input CreateUser {
-  email: String!
-  firstName: String! @rules(apply: ["required","min:5"])
-  lastName: String!  @rules(apply: ["required","min:5"])
-  password: String!  @rules(apply: ["required","min:5"])
-}
-
-input DeleteUser {
-  id: ID!
-}
-
-input adminUsers {
-  id: ID!
+  email: String! @rules(apply:["required","unique:users","email"])
+  firstName: String! @rules(apply: ["required"])
+  lastName: String! @rules(apply: ["required"])
+  password: String! @rules(apply: ["required"])
 }
 
 extend type Mutation {
@@ -36,13 +28,12 @@ extend type Mutation {
   @field(
       resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve"
   )
-  deleteUser(input: DeleteUser!): User
+  deleteUser(id: ID!): User
   @field(
       resolver: "App\\GraphQL\\Mutations\\User\\Delete@resolve"
   )
-  adminUsers(input: adminUsers!): User
+  CreateAdmin(id: ID!): User
   @field(
-      resolver: "App\\GraphQL\\Mutations\\User\\UserAdmin@resolve"
+      resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve"
   )
 }
-

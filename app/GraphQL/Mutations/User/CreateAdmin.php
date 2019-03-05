@@ -8,29 +8,25 @@ use App\models\User;
 use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 
-class UserAdmin
+class CreateAdmin
 {
     /**
      * @param $root
      * @param array $args
      * @param GraphQLContext $context
-     *
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($rootValue, array $args)
+    public function resolve($root, array $args)
     {
-        $user = Auth::user();
-        $input = $args['input'];
-
         throw_unless(
-            $user->is_admin,
+            auth()->user()->is_admin,
             UserError::class,
             "You do not have permission"
         );
 
         $userAdmin = User::find(
-            GlobalId::decodeID($input['id'])
+            GlobalId::decodeID($args['id'])
         );
 
         $userAdmin->update([
@@ -38,7 +34,5 @@ class UserAdmin
         ]);
 
         return $userAdmin;
-
-
     }
 }
