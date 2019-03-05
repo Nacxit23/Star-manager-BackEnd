@@ -1,8 +1,8 @@
 <?php
 
-namespace App\GraphQL\Mutations\Stars;
+namespace App\GraphQL\Mutations\Events;
 
-use App\Models\Star;
+use App\Models\Event;
 use GraphQL\Error\UserError;
 use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
@@ -22,14 +22,14 @@ class Delete
         throw_unless(
             Auth::user()->is_admin,
             UserError::class,
-            'You do not have permission to delete a star'
+            'You do not have permission to delete a event'
         );
 
-        $star = Star::find(
+        $event = Event::find(
             GlobalId::decodeID($args['id'])
         );
-        $star->delete();
+        $event->delete();
 
-        return $star;
+        return $event;
     }
 }

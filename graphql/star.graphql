@@ -1,23 +1,26 @@
 type Star @model {
-  events: [Event] @hasMany(type: "connection")
+  event: Event @belongsTo
   id: ID! @globalId
   paidAt: Date @rename(attribute: "paid_at")
   user: User! @belongsTo
-
 }
 
 extend type Query {
   stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
 }
 
-input CreateStarInput {
-  userId: ID!
+input UpdateStarInput{
+  eventId: ID!
+  paidAt: String!
 }
 
 extend type Mutation {
-  createStar(input: CreateStarInput!): Star
+  createStar(userId: ID!): Star
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Create@resolve")
 
   deleteStar(id: ID!): Star
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Delete@resolve")
+
+  updateStar(input: UpdateStarInput!): Star
+    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Update@resolve")
 }

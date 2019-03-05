@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations\Stars;
 
+use App\Models\Event;
 use App\Models\Star;
 use GraphQL\Error\UserError;
 use Illuminate\Support\Facades\Auth;
@@ -16,18 +17,39 @@ class Create
      * @return mixed
      * @throws \Throwable
      */
+
     public function resolve($root, array $args)
     {
-        $user = Auth::user();
+        $userId = GlobalId::decodeID($args['userId']);
 
         throw_unless(
-            $user->is_admin,
+            Auth::user()->is_admin,
             UserError::class,
             'You do not have permission to create a star'
         );
 
-        return Star::create([
-            'user_id' => GlobalId::decodeID($args['input']['userId']),
+        $star = Star::create([
+            'user_id' => $userId,
         ]);
+
+        $stars = Star::where('user_id', $userId)
+            ->where('event_id', null)
+            ->where('paid_at', null)
+            ->get();
+
+        $totalrows = $stars->count();
+
+        if ($totalrows >= 3) {
+            $event = Event::create();
+
+            Star::where('user_id', $userId)
+                ->where('event_id', null)
+                ->where('paid_at', null)
+                ->limit(3)
+                ->update([
+                    'event_id' => $event->id,
+                ]);
+            return $event;
+        }
     }
 }
