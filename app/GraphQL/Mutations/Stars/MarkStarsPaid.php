@@ -2,13 +2,12 @@
 
 namespace App\GraphQL\Mutations\Stars;
 
-use App\Models\Event;
 use App\Models\Star;
 use GraphQL\Error\UserError;
 use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 
-class Create
+class MarkStarsPaid
 {
     /**
      * @param $root
@@ -20,34 +19,26 @@ class Create
 
     public function resolve($root, array $args)
     {
-        $userId = GlobalId::decodeID($args['userId']);
+
+        $input = $args['input'];
+
+        $eventId = GlobalId::decodeID($input['eventId']);
 
         throw_unless(
             Auth::user()->is_admin,
             UserError::class,
-            'You do not have permission to create a star'
+            'You do not have permission to update a star'
         );
 
-        $star = Star::create([
-            'user_id' => $userId,
-        ]);
-
-        $stars = Star::where('user_id', $userId)
-            ->where('event_id', null)
+        $stars = Star::where('event_id', $eventId)
             ->where('paid_at', null)
             ->count();
 
-        $totalrows = $stars;
-
-        if ($totalrows >= 3) {
-            $event = Event::create();
-
-            Star::where('user_id', $userId)
-                ->where('event_id', null)
+            $stars = Star::where('event_id', $eventId)
                 ->where('paid_at', null)
                 ->update([
-                    'event_id' => $event->id,
+                    'paid_at' => $input['paidAt'],
                 ]);
-        }return $star;
+            return $stars;
     }
 }

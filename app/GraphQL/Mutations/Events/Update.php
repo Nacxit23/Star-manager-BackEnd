@@ -20,15 +20,13 @@ class Update
     {
         $input = $args['input'];
 
-        $eventId =  GlobalId::decodeID($input['id']);
-
-        $event = Event::find($eventId);
-
         throw_unless(
             Auth::user()->is_admin,
             UserError::class,
             'You do not have permission to modify a event'
         );
+
+        $event = Event::find(GlobalId::decodeID($input['id']));
 
         $event->update([
             'date' => $input['date'],

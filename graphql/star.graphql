@@ -22,5 +22,5 @@ extend type Mutation {
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Delete@resolve")
 
   updateStar(input: UpdateStarInput!): Star
-    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Update@resolve")
+    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsPaid@resolve")
 }
