@@ -18,9 +18,9 @@ extend type Query {
 
 input CreateUser {
   email: String!
-  firstName: String!
-  lastName: String!
-  password: String!
+  firstName: String! @rules(apply: ["required","min:5"])
+  lastName: String!  @rules(apply: ["required","min:5"])
+  password: String!  @rules(apply: ["required","min:5"])
 }
 
 input DeleteUser {
@@ -42,7 +42,7 @@ extend type Mutation {
   )
   adminUsers(input: adminUsers!): User
   @field(
-      resolver: "App\\GraphQL\\Mutations\\User\\Update@resolve"
+      resolver: "App\\GraphQL\\Mutations\\User\\UserAdmin@resolve"
   )
 }
 

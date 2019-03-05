@@ -49,8 +49,8 @@ class Create
         return User::create([
             'email' => $emailEntered,
             'first_name' => $firstname,
-            'last_name'=> $inputName,
-            'password' => $inputLastname,
+            'last_name'=> $lastname,
+            'password' => $password,
         ]);
     }
 }

@@ -30,11 +30,11 @@ class Delete
             'You do not have permission to delete a user'
         );
 
-        $comment = User::find(
+        $userDelete = User::find(
             GlobalId::decodeID($input['id'])
         );
-        User::destroy($comment->id);
+        User::destroy($userDelete->id);
 
-        return $comment;
+        return $userDelete;
     }
 }

@@ -29,15 +29,15 @@ class UserAdmin
             "You do not have permission"
         );
 
-        $comment = User::find(
+        $userAdmin = User::find(
             GlobalId::decodeID($input['id'])
         );
 
-        $comment->update([
+        $userAdmin->update([
             'is_admin' => true
         ]);
 
-        return $comment;
+        return $userAdmin;
 
 
     }
