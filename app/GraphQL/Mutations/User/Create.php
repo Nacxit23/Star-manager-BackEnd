@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Mutations\User;
 
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class Create
@@ -10,19 +9,18 @@ class Create
     /**
      * @param $root
      * @param array $args
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function resolve($root, array $args)
     {
         $imput = $args['input'];
 
-        $password = Hash::make($imput['password']);
-
         return User::create([
             'email' => $imput['email'],
             'first_name' => $imput['firstName'],
-            'last_name'=> $imput['lastName'],
-            'password' => $password,
-        ]);
+            'last_name' => $imput['lastName'],
+            'password' => bcrypt($imput['password']),
+        ])->refresh();
     }
 }

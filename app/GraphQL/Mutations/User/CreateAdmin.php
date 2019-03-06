@@ -5,31 +5,28 @@ namespace App\GraphQL\Mutations\User;
 use App\models\User;
 use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class CreateAdmin
 {
     /**
      * @param $root
      * @param array $args
+     * @param GraphQLContext $context
+     *
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($root, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
         throw_unless(
-            auth()->user()->is_admin,
+            $context->user()->is_admin,
             UserError::class,
-            "You do not have permission"
+            'You do not have permission'
         );
 
-        $userAdmin = User::find(
-            GlobalId::decodeID($args['id'])
-        );
-
-        $userAdmin->update([
-            'is_admin' => true
+        return tap(User::find(GlobalId::decodeID($args['id'])))->update([
+            'is_admin' => true,
         ]);
-
-        return $userAdmin;
     }
 }

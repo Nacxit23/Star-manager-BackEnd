@@ -15,15 +15,13 @@ class Update
      /**
      * @param $root
      * @param array $args
-     * @param GraphQLContext $context
      *
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($rootValue, array $args, GraphQLContext $context)
+    public function resolve($root, array $args)
     {
         $input = $args['input'];
-        $user = $context->user();
 
         /** @var Comment $comment */
         $comment = Comment::find(

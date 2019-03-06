@@ -16,7 +16,9 @@ extend type Query {
 }
 
 input CreateUser {
-  email: String! @rules(apply:["required", "email", "unique:users, email", "regex:/getnerdify/i"])
+  email: String! @rules(apply: ["bail", "email", "unique:users,email", "regex:/getnerdify\\.com$/"], messages: {
+    regex: "You need a Nerdify email address."
+  })
   firstName: String!
   lastName: String!
   password: String!
@@ -24,15 +26,9 @@ input CreateUser {
 
 extend type Mutation {
   createAdmin(id: ID!): User
-  @field(
-      resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve"
-  )
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
   createUser(input: CreateUser!): User
-  @field(
-      resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve"
-  )
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve")
   deleteUser(id: ID!): User
-  @field(
-      resolver: "App\\GraphQL\\Mutations\\User\\Delete@resolve"
-  )
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Delete@resolve")
 }

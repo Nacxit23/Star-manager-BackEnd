@@ -19,22 +19,16 @@ class Delete
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($rootValue, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
-        $user = Auth::user();
         $input = $args['input'];
 
         throw_unless(
-            $user->is_admin,
+            $context->user()->is_admin,
             UserError::class,
             'You do not have permission to delete a comment'
         );
 
-        $comment = Comment::find(
-            GlobalId::decodeID($input['id'])
-        );
-        $comment->delete();
-
-        return $comment;
+        return tap(Comment::find(GlobalId::decodeID($input['id'])))->delete();
     }
 }
