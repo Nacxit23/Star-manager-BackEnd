@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Mutations\User;
 
-use GraphQL\Type\Definition\ResolveInfo;
 use App\models\User;
 use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
