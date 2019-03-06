@@ -5,7 +5,6 @@ namespace App\GraphQL\Mutations\Stars;
 use App\Models\Event;
 use App\Models\Star;
 use GraphQL\Error\UserError;
-use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 
 class Create
@@ -13,17 +12,15 @@ class Create
     /**
      * @param $root
      * @param array $args
-     *
      * @return mixed
      * @throws \Throwable
      */
-
     public function resolve($root, array $args)
     {
         $userId = GlobalId::decodeID($args['userId']);
 
         throw_unless(
-            Auth::user()->is_admin,
+            auth()->user()->is_admin,
             UserError::class,
             'You do not have permission to create a star'
         );
@@ -37,9 +34,7 @@ class Create
             ->where('paid_at', null)
             ->count();
 
-        $totalrows = $stars;
-
-        if ($totalrows >= 3) {
+        if ($stars >= 3) {
             $event = Event::create();
 
             Star::where('user_id', $userId)
@@ -48,6 +43,8 @@ class Create
                 ->update([
                     'event_id' => $event->id,
                 ]);
-        }return $star;
+        }
+
+        return $star;
     }
 }

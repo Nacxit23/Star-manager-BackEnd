@@ -7,11 +7,11 @@ type Event @model {
   users: [User!]! @belongsToMany(type: "connection")
 }
 
-extend type Query{
+extend type Query {
   events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
 }
 
-input UpdateEvent{
+input UpdateEvent {
   date: DateTime!
   name: String!
   id: ID!

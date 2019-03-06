@@ -9,7 +9,7 @@ extend type Query {
   stars: [Star!]! @field(resolver: "App\\GraphQL\\Queries\\StarQuery@resolve")
 }
 
-input UpdateStarInput{
+input UpdateStarInput {
   eventId: ID!
   paidAt: String!
 }
