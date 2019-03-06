@@ -31,7 +31,6 @@ extend type Mutation {
   @field(
       resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve"
   )
-
   deleteUser(id: ID!): User
   @field(
       resolver: "App\\GraphQL\\Mutations\\User\\Delete@resolve"
