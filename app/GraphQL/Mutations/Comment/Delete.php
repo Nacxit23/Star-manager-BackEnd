@@ -30,9 +30,10 @@ class Delete
             'You do not have permission to delete a comment'
         );
 
-        $comment = Comment::destroy(
+        $comment = Comment::find(
             GlobalId::decodeID($input['id'])
         );
+        $comment->delete();
 
         return $comment;
     }
