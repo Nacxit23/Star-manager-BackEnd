@@ -1,6 +1,7 @@
 <?php
 
 namespace App\GraphQL\Mutations\Events;
+
 use App\Models\Event;
 use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
@@ -13,7 +14,6 @@ class Update
      * @return mixed
      * @throws \Throwable
      */
-
     public function resolve($root, array $args)
     {
         $input = $args['input'];

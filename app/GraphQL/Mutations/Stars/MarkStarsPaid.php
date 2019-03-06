@@ -27,10 +27,6 @@ class MarkStarsPaid
 
         $stars = Star::where('event_id', $eventId)
             ->where('paid_at', null)
-            ->count();
-
-        $stars = Star::where('event_id', $eventId)
-            ->where('paid_at', null)
             ->update([
                 'paid_at' => $input['paidAt'],
             ]);
