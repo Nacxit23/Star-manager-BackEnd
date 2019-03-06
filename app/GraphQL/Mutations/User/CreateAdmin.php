@@ -3,9 +3,7 @@
 namespace App\GraphQL\Mutations\User;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\models\User;
-use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 
 class CreateAdmin
@@ -13,7 +11,6 @@ class CreateAdmin
     /**
      * @param $root
      * @param array $args
-     * @param GraphQLContext $context
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */

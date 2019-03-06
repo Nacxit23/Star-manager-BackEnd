@@ -7,7 +7,6 @@ type User {
   isAdmin: Boolean! @rename(attribute: "is_admin")
   lastName: String @rename(attribute: "last_name")
   name: String
-  password: String!
   stars: [Star!]! @hasMany(type: "connection")
 }
 
@@ -18,9 +17,9 @@ extend type Query {
 
 input CreateUser {
   email: String! @rules(apply:["required","email","unique:users,email","regex:/getnerdify/i"])
-  firstName: String! @rules(apply: ["required"])
-  lastName: String! @rules(apply: ["required"])
-  password: String! @rules(apply: ["required"])
+  firstName: String!
+  lastName: String!
+  password: String!
 }
 
 extend type Mutation {

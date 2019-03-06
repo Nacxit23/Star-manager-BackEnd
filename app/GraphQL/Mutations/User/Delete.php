@@ -6,14 +6,12 @@ use GraphQL\Type\Definition\ResolveInfo;
 use App\models\User;
 use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
-use Illuminate\Support\Facades\Auth;
 
 class Delete
 {
    /**
      * @param $root
      * @param array $args
-     *
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
