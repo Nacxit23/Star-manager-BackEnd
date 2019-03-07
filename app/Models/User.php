@@ -13,12 +13,14 @@ class User extends Authenticatable
      * {@inheritdoc}
      */
     protected $fillable = [
+        'api_token',
         'email',
         'first_name',
         'is_admin',
         'last_name',
+        'password',
     ];
-    
+
     /**
      * {@inheritdoc}
      */
