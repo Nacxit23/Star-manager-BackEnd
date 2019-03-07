@@ -146,6 +146,7 @@ return [
 
     'attributes' => [
         'input.email' => 'email',
+        'input.paidAt' => 'paid at',
     ],
 
 ];
