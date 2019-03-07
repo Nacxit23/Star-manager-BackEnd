@@ -37,20 +37,31 @@ class Create
             ->count();
 
         if ($starCount == 3) {
-            $event = Event::create([
-                'name' => 'Thanks '.$user->name.' 🤤',
-            ]);
-
-            Star::where('user_id', $userId)
-                ->where('event_id', null)
-                ->where('paid_at', null)
-                ->update([
-                    'event_id' => $event->id,
-                ]);
+            $this->createEvent($user);
 
             $star->refresh();
         }
 
         return $star;
+    }
+
+    /**
+     * @param User $user
+     */
+    protected function createEvent(User $user): void
+    {
+        /** @var Event $event */
+        $event = Event::create([
+            'name' => "Thanks {$user->name} 🤤",
+        ]);
+
+        Star::where('user_id', $user->id)
+            ->where('event_id', null)
+            ->where('paid_at', null)
+            ->update([
+                'event_id' => $event->id,
+            ]);
+
+        $event->users()->attach(User::all());
     }
 }
