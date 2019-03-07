@@ -4,35 +4,42 @@ namespace App\GraphQL\Mutations\Stars;
 
 use App\Models\Event;
 use App\Models\Star;
+use App\Models\User;
+use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Create
 {
     /**
      * @param $root
      * @param array $args
-     * @param GraphQLContext $context
      *
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($root, array $args, GraphQLContext $context)
+    public function resolve($root, array $args)
     {
         $userId = GlobalId::decodeID($args['userId']);
-        $context->user()->is_admin;
+        /** @var User $user */
+        $user = User::find($userId);
 
+        throw_unless($user, UserError::class, 'User not found');
+
+        /** @var Star $star */
         $star = Star::create([
             'user_id' => $userId,
         ]);
-
-        $stars = Star::where('user_id', $userId)
-            ->where('event_id', null)
-            ->where('paid_at', null)
+        $starCount = $user->stars()
+            ->where([
+                'event_id' => null,
+                'paid_at' => null,
+            ])
             ->count();
 
-        if ($stars >= 3) {
-            $event = Event::create();
+        if ($starCount == 3) {
+            $event = Event::create([
+                'name' => 'Thanks '.$user->name.' 🤤',
+            ]);
 
             Star::where('user_id', $userId)
                 ->where('event_id', null)
@@ -40,6 +47,8 @@ class Create
                 ->update([
                     'event_id' => $event->id,
                 ]);
+
+            $star->refresh();
         }
 
         return $star;
