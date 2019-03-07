@@ -1,6 +1,6 @@
 type Event @model {
   comments: [Comment!]! @hasMany(type: "connection")
-  date: DateTime
+  date: Date
   id: ID! @globalId
   name: String
   stars: [Star!]! @hasMany(type: "connection")

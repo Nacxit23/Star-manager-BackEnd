@@ -11,7 +11,7 @@ extend type Query {
 
 input UpdateStarInput {
   eventId: ID!
-  paidAt: String!
+  paidAt: Date!
 }
 
 extend type Mutation {
@@ -23,7 +23,7 @@ extend type Mutation {
     @middleware(checks: ["admin"])
     @delete(globalId: true)
 
-  updateStar(input: UpdateStarInput!): Star
+  markStarsAsPaid(input: UpdateStarInput!): Boolean
     @middleware(checks: ["admin"])
-    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsPaid@resolve")
+    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsAsPaid@resolve")
 }
