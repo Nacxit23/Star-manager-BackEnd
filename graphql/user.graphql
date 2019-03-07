@@ -26,10 +26,12 @@ input CreateUser {
 
 extend type Mutation {
   createAdmin(id: ID!): User
-    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
     @middleware(checks: ["admin"])
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
+
   createUser(input: CreateUser!): User
     @field(resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve")
+
   deleteUser(id: ID!): User
     @middleware(checks: ["admin"])
     @delete(globalId: true)
