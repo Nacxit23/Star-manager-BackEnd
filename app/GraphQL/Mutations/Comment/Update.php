@@ -2,13 +2,9 @@
 
 namespace App\GraphQL\Mutations\Comment;
 
-use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\Comment;
-use Illuminate\Support\Facades\Auth;
 use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
-
 
 class Update
 {

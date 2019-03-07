@@ -44,6 +44,6 @@ class Create
         return $event->comments()->create([
             'description' => $input['description'],
             'user_id' => $user->id,
-        ]);
+        ])->refresh();
     }
 }
