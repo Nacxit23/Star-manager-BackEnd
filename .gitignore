@@ -5,6 +5,7 @@
 /vendor
 .env
 .phpunit.result.cache
+.idea
 *.code-workspace
 Homestead.json
 Homestead.yaml

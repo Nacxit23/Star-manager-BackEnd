@@ -17,7 +17,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->is_admin) {
+        $user = $request->user();
+
+        if (! $user || ! $user->is_admin) {
             throw new UserError('You are not authorized to perform this action');
         }
 
