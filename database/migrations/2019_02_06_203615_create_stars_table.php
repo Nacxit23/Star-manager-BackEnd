@@ -15,7 +15,7 @@ class CreateStarsTable extends Migration
     {
         Schema::create('stars', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('event_id');
+            $table->unsignedInteger('event_id')->nullable();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

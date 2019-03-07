@@ -11,8 +11,7 @@ class Event extends Model
      */
     protected $fillable = [
         'date',
-        'name',
-        'star_id',
+        'name'
     ];
 
     /**

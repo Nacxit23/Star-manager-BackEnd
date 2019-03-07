@@ -7,23 +7,21 @@ use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class Update
+class Delete
 {
     /**
      * @param $root
      * @param array $args
      * @param GraphQLContext $context
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
      * @throws \Throwable
      */
     public function resolve($root, array $args, GraphQLContext $context)
     {
-        $input = $args['input'];
-
-        /** @var Comment $comment */
+        $user = $context->user();
         $comment = Comment::find(
-            GlobalId::decodeID($input['id'])
+            GlobalId::decodeID($args['id'])
         );
 
         throw_unless(
@@ -33,14 +31,12 @@ class Update
         );
 
         throw_unless(
-            $comment->user_id == $context->user()->id,
+            $comment->user_id == $user->id || $user->is_admin,
             UserError::class,
-            'You do not have permission to update this comment.'
+            'You do not have permission to delete this comment.'
         );
 
-        $comment->update([
-            'description' => $input['description'],
-        ]);
+        $comment->delete();
 
         return $comment;
     }
