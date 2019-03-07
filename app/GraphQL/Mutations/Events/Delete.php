@@ -3,8 +3,8 @@
 namespace App\GraphQL\Mutations\Events;
 
 use App\Models\Event;
-use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Delete
 {
@@ -15,19 +15,10 @@ class Delete
      * @throws \Throwable
      */
 
-    public function resolve($root, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
-        throw_unless(
-            auth()->user()->is_admin,
-            UserError::class,
-            'You do not have permission to delete a event'
-        );
+        $context->user()->is_admin;
 
-        $event = Event::find(
-            GlobalId::decodeID($args['id'])
-        );
-        $event->delete();
-
-        return $event;
+        return tap(Event::find(GlobalId::decodeID($args['id'])))->delete();
     }
 }

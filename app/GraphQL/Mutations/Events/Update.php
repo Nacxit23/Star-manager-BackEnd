@@ -3,33 +3,27 @@
 namespace App\GraphQL\Mutations\Events;
 
 use App\Models\Event;
-use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Update
 {
     /**
      * @param $root
      * @param array $args
-     * @return mixed
+     * @param GraphQLContext $context
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($root, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
         $input = $args['input'];
+        $context->user()->is_admin;
 
-        throw_unless(
-            auth()->user()->is_admin,
-            UserError::class,
-            'You do not have permission to modify a event'
-        );
-
-        $event = Event::find(GlobalId::decodeID($input['id']));
-
-        $event->update([
+        return tap(Event::find(GlobalId::decodeID($input['id'])))->update([
             'date' => $input['date'],
-            'name'=> $input['name'],
+            'name' => $input['name'],
         ]);
-        return $event;
     }
 }

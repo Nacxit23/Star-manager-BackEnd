@@ -4,26 +4,23 @@ namespace App\GraphQL\Mutations\Stars;
 
 use App\Models\Event;
 use App\Models\Star;
-use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Create
 {
     /**
      * @param $root
      * @param array $args
-     * @return mixed
+     * @param GraphQLContext $context
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($root, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
         $userId = GlobalId::decodeID($args['userId']);
-
-        throw_unless(
-            auth()->user()->is_admin,
-            UserError::class,
-            'You do not have permission to create a star'
-        );
+        $context->user()->is_admin;
 
         $star = Star::create([
             'user_id' => $userId,

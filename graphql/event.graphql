@@ -19,8 +19,10 @@ input UpdateEvent {
 
 extend type Mutation {
   deleteEvent(id: ID!): Event
-    @field(resolver: "App\\GraphQL\\Mutations\\Events\\Delete@resolve")
+    @middleware(checks: ["admin"])
+    @delete(globalId: true)
 
   updateEvent(input: UpdateEvent!): Event
+    @middleware(checks: ["admin"])
     @field(resolver: "App\\GraphQL\\Mutations\\Events\\Update@resolve")
 }

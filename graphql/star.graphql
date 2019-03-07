@@ -16,11 +16,14 @@ input UpdateStarInput {
 
 extend type Mutation {
   createStar(userId: ID!): Star
+    @middleware(checks: ["admin"])
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Create@resolve")
 
   deleteStar(id: ID!): Star
-    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Delete@resolve")
+    @middleware(checks: ["admin"])
+    @delete(globalId: true)
 
   updateStar(input: UpdateStarInput!): Star
+    @middleware(checks: ["admin"])
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsPaid@resolve")
 }

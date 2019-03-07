@@ -3,30 +3,23 @@
 namespace App\GraphQL\Mutations\Stars;
 
 use App\Models\Star;
-use GraphQL\Error\UserError;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Delete
 {
     /**
      * @param $root
      * @param array $args
-     * @return int
+     * @param GraphQLContext $context
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
-    public function resolve($root, array $args)
+    public function resolve($root, array $args, GraphQLContext $context)
     {
-        throw_unless(
-            auth()->user()->is_admin,
-            UserError::class,
-            'You do not have permission to delete a star'
-        );
+        $context->user()->is_admin;
 
-        $star = Star::find(
-            GlobalId::decodeID($args['id'])
-        );
-        $star->delete();
-
-        return $star;
+        return tap(Star::find(GlobalId::decodeID($args['id'])))->delete();
     }
 }
