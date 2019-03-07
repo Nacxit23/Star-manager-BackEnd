@@ -22,9 +22,10 @@ input UpdateComment {
 extend type Mutation {
   createComment(input: CreateComment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Create@resolve")
+
   updateComment(input: UpdateComment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Update@resolve")
+
   deleteComment(id: ID!): Comment
-    @middleware(checks: ["admin"])
-    @delete(globalId: true)
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Delete@resolve")
 }
