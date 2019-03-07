@@ -22,7 +22,9 @@ class MarkStarsPaid
         $context->user()->is_admin;
         $eventId = GlobalId::decodeID($input['eventId']);
 
-        return tap(Star::where('event_id', $eventId)->where('paid_at', null)->update([
+        return tap(Star::where('event_id', $eventId)
+        ->where('paid_at', null)
+        ->update([
             'paid_at' => $input['paidAt'],
         ]));
     }
