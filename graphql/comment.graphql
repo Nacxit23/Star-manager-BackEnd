@@ -19,15 +19,13 @@ input UpdateComment {
   id: ID!
 }
 
-input DeleteComment {
-  id: ID!
-}
-
 extend type Mutation {
   createComment(input: CreateComment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Create@resolve")
+
   updateComment(input: UpdateComment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Update@resolve")
-  deleteComment(input: DeleteComment!): Comment
+
+  deleteComment(id: ID!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Delete@resolve")
 }

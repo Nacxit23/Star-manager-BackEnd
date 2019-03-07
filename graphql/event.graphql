@@ -1,6 +1,6 @@
 type Event @model {
   comments: [Comment!]! @hasMany(type: "connection")
-  date: Date
+  date: DateTime
   id: ID! @globalId
   name: String
   stars: [Star!]! @hasMany(type: "connection")
@@ -13,7 +13,6 @@ extend type Query {
 
 input UpdateEvent {
   date: DateTime!
-  name: String!
   id: ID!
 }
 
@@ -24,5 +23,5 @@ extend type Mutation {
 
   updateEvent(input: UpdateEvent!): Event
     @middleware(checks: ["admin"])
-    @field(resolver: "App\\GraphQL\\Mutations\\Events\\Update@resolve")
+    @update(flatten: true globalId: true)
 }

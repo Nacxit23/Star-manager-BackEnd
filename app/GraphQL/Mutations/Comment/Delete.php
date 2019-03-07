@@ -2,12 +2,10 @@
 
 namespace App\GraphQL\Mutations\Comment;
 
-use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\Comment;
 use GraphQL\Error\UserError;
-use Illuminate\Support\Facades\Auth;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Delete
 {
@@ -16,19 +14,30 @@ class Delete
      * @param array $args
      * @param GraphQLContext $context
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
      * @throws \Throwable
      */
     public function resolve($root, array $args, GraphQLContext $context)
     {
-        $input = $args['input'];
-
-        throw_unless(
-            $context->user()->is_admin,
-            UserError::class,
-            'You do not have permission to delete a comment'
+        $user = $context->user();
+        $comment = Comment::find(
+            GlobalId::decodeID($args['id'])
         );
 
-        return tap(Comment::find(GlobalId::decodeID($input['id'])))->delete();
+        throw_unless(
+            $comment,
+            UserError::class,
+            'Comment not found.'
+        );
+
+        throw_unless(
+            $comment->user_id == $user->id || $user->is_admin,
+            UserError::class,
+            'You do not have permission to delete this comment.'
+        );
+
+        $comment->delete();
+
+        return $comment;
     }
 }
