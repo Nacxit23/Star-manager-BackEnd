@@ -14,7 +14,6 @@ class Delete
      * @return int
      * @throws \Throwable
      */
-
     public function resolve($root, array $args, GraphQLContext $context)
     {
         $context->user()->is_admin;
