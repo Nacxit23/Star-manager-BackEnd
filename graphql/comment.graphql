@@ -1,0 +1,31 @@
+type Comment @model {
+  description: String!
+  event: Event! @belongsTo
+  id: ID! @globalId
+  user: User! @belongsTo
+}
+
+extend type Query {
+  comments: [Comment!]! @field(resolver: "App\\GraphQL\\Queries\\CommentQuery@resolve")
+}
+
+input CreateComment {
+  description: String!
+  eventId: ID!
+}
+
+input UpdateComment {
+  description: String!
+  id: ID!
+}
+
+extend type Mutation {
+  createComment(input: CreateComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Create@resolve")
+
+  updateComment(input: UpdateComment!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Update@resolve")
+
+  deleteComment(id: ID!): Comment
+    @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Delete@resolve")
+}

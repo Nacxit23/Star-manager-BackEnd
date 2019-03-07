@@ -1,0 +1,27 @@
+type Event @model {
+  comments: [Comment!]! @hasMany(type: "connection")
+  date: DateTime
+  id: ID! @globalId
+  name: String
+  stars: [Star!]! @hasMany(type: "connection")
+  users: [User!]! @belongsToMany(type: "connection")
+}
+
+extend type Query {
+  events: [Event!]! @field(resolver: "App\\GraphQL\\Queries\\EventQuery@resolve")
+}
+
+input UpdateEvent {
+  date: DateTime!
+  id: ID!
+}
+
+extend type Mutation {
+  deleteEvent(id: ID!): Event
+    @middleware(checks: ["admin"])
+    @delete(globalId: true)
+
+  updateEvent(input: UpdateEvent!): Event
+    @middleware(checks: ["admin"])
+    @update(flatten: true globalId: true)
+}
