@@ -19,7 +19,7 @@ input UpdateComment {
   id: ID!
 }
 
-extend type Mutation {
+extend type Mutation @group(middleware: ["auth"]) {
   createComment(input: CreateComment!): Comment
     @field(resolver: "App\\GraphQL\\Mutations\\Comment\\Create@resolve")
 

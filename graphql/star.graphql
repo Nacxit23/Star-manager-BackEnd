@@ -14,16 +14,13 @@ input UpdateStarInput {
   paidAt: Date!
 }
 
-extend type Mutation {
+extend type Mutation @group(middleware: ["auth", "admin"]) {
   createStar(userId: ID!): Star
-    @middleware(checks: ["admin"])
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Create@resolve")
 
   deleteStar(id: ID!): Star
-    @middleware(checks: ["admin"])
     @delete(globalId: true)
 
   markStarsAsPaid(input: UpdateStarInput!): Boolean
-    @middleware(checks: ["admin"])
     @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsAsPaid@resolve")
 }
