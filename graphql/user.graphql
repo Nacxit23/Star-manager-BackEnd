@@ -1,4 +1,5 @@
 type User {
+  apiToken: String @rename(attribute: "api_token")
   comments: [Comment!]! @hasMany(type: "connection")
   email: String!
   events: [Event!]! @belongsToMany(type: "connection")
@@ -13,6 +14,11 @@ type User {
 extend type Query {
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
   users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+}
+
+input LoginUser {
+  email: String!
+  password: String!
 }
 
 input CreateUser {
@@ -35,4 +41,8 @@ extend type Mutation @group(middleware: ["auth", "admin"]) {
 
   deleteUser(id: ID!): User
     @delete(globalId: true)
+}
+extend type Mutation {
+    loginUser(input: LoginUser!): User
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@resolve")
 }
