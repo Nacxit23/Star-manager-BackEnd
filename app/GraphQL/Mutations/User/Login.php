@@ -26,7 +26,7 @@ class Login
         throw_unless(
             Auth::guard('web')->attempt($loginapi),
             UserError::class,
-            'You do not have permission to comment on this event.'
+            'The password and the mail do not apply.'
         );
 
         $user = User::where('email','=',$input['email'])->first();
