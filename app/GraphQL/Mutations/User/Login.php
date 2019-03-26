@@ -23,12 +23,12 @@ class Login
         throw_unless(
             Auth::guard('web')->attempt($credentials),
             UserError::class,
-            'The password and the mail do not apply.'
+            'The password and the email do not apply.'
         );
 
         $user = Auth::guard('web')->user();
         $apiToken = $user->api_token;
 
-        return $apiToken;
+        return ['api_token' => $apiToken];
     }
 }

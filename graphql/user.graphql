@@ -10,6 +10,10 @@ type User {
   stars: [Star!]! @hasMany(type: "connection")
 }
 
+type LoginResponse {
+  apiToken: String! @rename(attribute: "api_token")
+}
+
 extend type Query {
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
   users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
@@ -32,6 +36,9 @@ input CreateUser {
 extend type Mutation {
   createUser(input: CreateUser!): User
     @field(resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve")
+
+  loginUser(input: LoginUser!): LoginResponse!
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@resolve")
 }
 
 extend type Mutation @group(middleware: ["auth", "admin"]) {
@@ -40,8 +47,4 @@ extend type Mutation @group(middleware: ["auth", "admin"]) {
 
   deleteUser(id: ID!): User
     @delete(globalId: true)
-}
-extend type Mutation {
-  loginUser(input: LoginUser!): User
-    @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@resolve")
 }
