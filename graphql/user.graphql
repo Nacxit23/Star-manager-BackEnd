@@ -11,7 +11,11 @@ type User {
 }
 
 type LoginResponse {
-  apiToken: String! @rename(attribute: "api_token")
+  token: String!
+}
+
+extend type Query {
+  me: User @middleware(checks: ["auth:web"]) @auth
 }
 
 extend type Query {

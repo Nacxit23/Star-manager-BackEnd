@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Mutations\User;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use GraphQL\Error\UserError;
 
@@ -16,19 +15,14 @@ class Login
      * @throws \Throwable
      */
     public function resolve($root, array $args){
-
-        $input = $args['input'];
-        $credentials = Arr::only($input,['email','password']);
-
         throw_unless(
-            Auth::guard('web')->attempt($credentials),
+            Auth::guard('web')->attempt($args['input']),
             UserError::class,
             'The password and the email do not apply.'
         );
 
         $user = Auth::guard('web')->user();
-        $apiToken = $user->api_token;
 
-        return ['api_token' => $apiToken];
+        return ['token' => $user->api_token];
     }
 }
