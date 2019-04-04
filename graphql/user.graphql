@@ -10,9 +10,22 @@ type User {
   stars: [Star!]! @hasMany(type: "connection")
 }
 
+type LoginResponse {
+  token: String!
+}
+
+extend type Query {
+  me: User @middleware(checks: ["auth:web"]) @auth
+}
+
 extend type Query {
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
   users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+}
+
+input LoginUser {
+  email: String!
+  password: String!
 }
 
 input CreateUser {
@@ -25,14 +38,17 @@ input CreateUser {
 }
 
 extend type Mutation {
-  createAdmin(id: ID!): User
-    @middleware(checks: ["admin"])
-    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
-
   createUser(input: CreateUser!): User
     @field(resolver: "App\\GraphQL\\Mutations\\User\\Create@resolve")
 
+  loginUser(input: LoginUser!): LoginResponse!
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\Login@resolve")
+}
+
+extend type Mutation @group(middleware: ["auth", "admin"]) {
+  createAdmin(id: ID!): User
+    @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
+
   deleteUser(id: ID!): User
-    @middleware(checks: ["admin"])
     @delete(globalId: true)
 }

@@ -13,6 +13,7 @@ class Star extends Model
         'event_id',
         'paid_at',
         'user_id',
+        'description',
     ];
 
     /**

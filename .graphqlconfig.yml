@@ -5,3 +5,4 @@ projects:
     extensions:
       endpoints:
         dev: 'http://trouble-stars.test/graphql'
+        prod: 'https://trouble-stars.getnerdify.com/graphql'

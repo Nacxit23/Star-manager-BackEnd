@@ -19,6 +19,7 @@ class CreateStarsTable extends Migration
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->text('description');
             $table->date('paid_at')->nullable();
             $table->timestamps();
         });

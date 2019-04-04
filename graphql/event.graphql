@@ -16,12 +16,10 @@ input UpdateEvent {
   id: ID!
 }
 
-extend type Mutation {
+extend type Mutation @group(middleware: ["auth", "admin"]) {
   deleteEvent(id: ID!): Event
-    @middleware(checks: ["admin"])
     @delete(globalId: true)
 
   updateEvent(input: UpdateEvent!): Event
-    @middleware(checks: ["admin"])
     @update(flatten: true globalId: true)
 }

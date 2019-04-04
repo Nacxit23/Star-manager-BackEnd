@@ -19,7 +19,8 @@ class Create
      */
     public function resolve($root, array $args)
     {
-        $userId = GlobalId::decodeID($args['userId']);
+        $input = $args['input'];
+        $userId = GlobalId::decodeID($input['userId']);
         /** @var User $user */
         $user = User::find($userId);
 
@@ -28,6 +29,7 @@ class Create
         /** @var Star $star */
         $star = Star::create([
             'user_id' => $userId,
+            'description' => $input['description'],
         ]);
         $starCount = $user->stars()
             ->where([
