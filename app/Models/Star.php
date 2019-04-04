@@ -10,7 +10,6 @@ class Star extends Model
      * {@inheritdoc}
      */
     protected $fillable = [
-        'event_id',
         'paid_at',
         'user_id',
         'description',
