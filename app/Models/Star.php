@@ -11,6 +11,7 @@ class Star extends Model
      */
     protected $fillable = [
         'paid_at',
+        'event_id',
         'user_id',
         'description',
     ];
