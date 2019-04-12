@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Mutations\Stars;
+namespace App\GraphQL\Mutations\Star;
 
 use App\Models\Star;
 use Nuwave\Lighthouse\Execution\Utils\GlobalId;

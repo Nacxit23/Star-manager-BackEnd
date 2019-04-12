@@ -22,10 +22,11 @@ input UpdateStarInput {
 
 extend type Mutation @group(middleware: ["auth", "admin"]) {
   createStar(input: CreateStarInput): Star
-    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\Create@resolve")
+    @field(resolver: "App\\GraphQL\\Mutations\\Star\\Create@resolve")
 
-  deleteStar(id: ID!): Star @delete(globalId: true)
+  deleteStar(id: ID!): Boolean
+    @field(resolver: "App\\GraphQL\\Mutations\\Star\\Delete@resolve")
 
   markStarsAsPaid(input: UpdateStarInput!): Boolean
-    @field(resolver: "App\\GraphQL\\Mutations\\Stars\\MarkStarsAsPaid@resolve")
+    @field(resolver: "App\\GraphQL\\Mutations\\Star\\MarkStarsAsPaid@resolve")
 }
