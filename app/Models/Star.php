@@ -31,4 +31,16 @@ class Star extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeStatus($query, $args)
+    {
+        logger($args);
+        if ($args['status'] == 'Paid') {
+            return $query->whereNotNull('paid_at');
+        }
+        if ($args['status'] == 'NoPaid') {
+            return $query->whereNull('paid_at');
+        }
+        return $query->whereNull('paid_at');
+    }
 }

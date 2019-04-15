@@ -51,4 +51,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Star::class);
     }
+
+    public function scopePaidStar($query)
+    {
+        return $query->whereHas('stars', function ($query) {
+            $query->whereNotNull('paid_at');
+        });
+    }
+
+    public function scopeNoPaidStar($query)
+    {
+        return $query->whereHas('stars', function ($query) {
+            $query->whereNull('paid_at');
+        });
+    }
 }

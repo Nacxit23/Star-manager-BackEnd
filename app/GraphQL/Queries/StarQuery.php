@@ -2,9 +2,9 @@
 
 namespace App\GraphQL\Queries;
 
+use App\Models\Star;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use App\Models\Star;
 
 class StarQuery
 {
@@ -20,6 +20,7 @@ class StarQuery
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         // TODO implement the resolver
+
         return Star::all();
     }
 }

@@ -7,9 +7,14 @@ type User {
   isAdmin: Boolean! @rename(attribute: "is_admin")
   lastName: String! @rename(attribute: "last_name")
   name: String!
-  stars: [Star!]! @hasMany(type: "connection")
-}
 
+  stars(status: statusOption): [Star!]!
+    @hasMany(scopes: ["status"], type: "connection")
+}
+enum statusOption {
+  Paid
+  NoPaid
+}
 type LoginResponse {
   token: String!
 }
@@ -20,7 +25,26 @@ extend type Query {
 
 extend type Query {
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
-  users: [User!]! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+  users: [User!]!
+    @paginate(
+      scopes: ["noPaidStar"]
+      type: "connection"
+      resolver: "App\\GraphQL\\Queries\\UserQuery@resolve"
+    )
+  usersSelect: [User!]!
+    @field(resolver: "App\\GraphQL\\Queries\\UserQuery@resolve")
+
+  usersAdmin: [User!]!
+    @paginate(
+      type: "connection"
+      resolver: "App\\GraphQL\\Queries\\UserQuery@resolve"
+    )
+  paidStarList: [User!]!
+    @paginate(
+      scopes: ["paidStar"]
+      type: "connection"
+      resolver: "App\\GraphQL\\Queries\\UserQuery@resolve"
+    )
 }
 
 input LoginUser {
@@ -29,9 +53,16 @@ input LoginUser {
 }
 
 input CreateUser {
-  email: String! @rules(apply: ["bail", "email", "unique:users,email", "regex:/getnerdify\\.com$/"], messages: {
-    regex: "You need a Nerdify email address."
-  })
+  email: String!
+    @rules(
+      apply: [
+        "bail"
+        "email"
+        "unique:users,email"
+        "regex:/getnerdify\\.com$/"
+      ]
+      messages: { regex: "You need a Nerdify email address." }
+    )
   firstName: String!
   lastName: String!
   password: String!
@@ -49,6 +80,5 @@ extend type Mutation @group(middleware: ["auth", "admin"]) {
   createAdmin(id: ID!): User
     @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateAdmin@resolve")
 
-  deleteUser(id: ID!): User
-    @delete(globalId: true)
+  deleteUser(id: ID!): User @delete(globalId: true)
 }
